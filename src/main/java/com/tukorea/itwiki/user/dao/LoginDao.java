@@ -1,4 +1,4 @@
-package com.tukorea.admin.member.dao;
+package com.tukorea.itwiki.user.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 

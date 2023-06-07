@@ -1,4 +1,4 @@
-package com.tukorea.board.domain;
+package com.tukorea.itwiki.board.domain;
 
 public class Board {
 

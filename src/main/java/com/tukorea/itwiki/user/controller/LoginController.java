@@ -1,7 +1,7 @@
-package com.tukorea.admin.member.controller;
+package com.tukorea.itwiki.user.controller;
 
-import com.tukorea.admin.member.dto.LoginForm;
-import com.tukorea.admin.member.service.LoginService;
+import com.tukorea.itwiki.user.dto.LoginForm;
+import com.tukorea.itwiki.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +21,14 @@ public class LoginController {
     public LoginController(LoginService service) {
         this.service = service;
     }
+
+
     @GetMapping("/login")
     public String login() {
         return "common/login/login";
     }
+
+
     @ResponseBody
     @PostMapping("/login")
     public HashMap<String, Object> loginAjax(LoginForm loginForm, HttpServletRequest request) {
@@ -42,6 +46,8 @@ public class LoginController {
         }
         return resultMap;
     }
+
+
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

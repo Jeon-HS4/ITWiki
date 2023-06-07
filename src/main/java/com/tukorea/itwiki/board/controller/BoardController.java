@@ -1,7 +1,9 @@
-package com.tukorea.board.controller;
+package com.tukorea.itwiki.board.controller;
 
-import java.util.Map;
-
+import com.tukorea.itwiki.board.domain.Board;
+import com.tukorea.itwiki.board.dto.BoardForm;
+import com.tukorea.itwiki.board.dto.BoardModifyForm;
+import com.tukorea.itwiki.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tukorea.board.domain.Board;
-import com.tukorea.board.dto.BoardForm;
-import com.tukorea.board.dto.BoardModifyForm;
-import com.tukorea.board.service.BoardService;
+import java.util.Map;
 
 @Controller
 public class BoardController {
@@ -25,21 +24,13 @@ public class BoardController {
 		this.service = service;
 	}
 	
-	/**
-	 * 게시판 등록 페이지 연결 Controller
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
+
 	@GetMapping("/board/form")
 	public String addBoardForm() {
 		return "board/addBoardForm";
 	}
 	
-	/**
-	 * 게시판 등록 Controller
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
+
 	@PostMapping("/board/new")
 	public String addBoard(BoardForm boardForm) {
 		// 게시판 등록 메서드 호출
@@ -48,12 +39,8 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	/**
-	 * 게시판 목록 페이지 연결 Controller
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
-	@GetMapping(value = {"/board/list","/"})
+
+	@GetMapping("/board/list")
 	public String getBoardList(@RequestParam(required = false, defaultValue = "1") int pageNum, Model model) {
 		// 게시판 목록 조회 메서드 호출
 		Map<String, Object> result = service.getBoardList(pageNum);
@@ -66,11 +53,7 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	/**
-	 * 게시판 상세 페이지 연결 Controller
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
+
 	@GetMapping("/board/detail")
 	public String getBoardDetail(@RequestParam int boardSeq, Model model) {
 		// 게시판 상세정보 조회 메서드 호출

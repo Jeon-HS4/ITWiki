@@ -1,4 +1,4 @@
-package com.tukorea.admin.member.dto;
+package com.tukorea.itwiki.user.dto;
 
 public class LoginForm {
 

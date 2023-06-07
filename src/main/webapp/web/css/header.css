@@ -1,0 +1,19 @@
+.header {
+    background-color: #f1f1f1;
+    padding: 5px 20px 5px 20px;
+    text-align: right;
+    margin-bottom: 30px;
+}
+
+.logo {
+    text-align: center;
+}
+
+.login_links {
+    margin-bottom: 5px;
+    margin-right: 10px;
+}
+
+.login_links a {
+    margin-left: 10px;
+}

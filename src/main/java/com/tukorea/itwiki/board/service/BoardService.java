@@ -1,19 +1,18 @@
-package com.tukorea.board.service;
+package com.tukorea.itwiki.board.service;
+
+import com.tukorea.itwiki.board.dao.BoardMapper;
+import com.tukorea.itwiki.board.domain.Board;
+import com.tukorea.itwiki.board.dto.BoardForm;
+import com.tukorea.itwiki.board.dto.BoardList;
+import com.tukorea.itwiki.board.dto.BoardModifyForm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-
-import com.tukorea.board.dao.BoardMapper;
-import com.tukorea.board.domain.Board;
-import com.tukorea.board.dto.BoardForm;
-import com.tukorea.board.dto.BoardList;
-import com.tukorea.board.dto.BoardModifyForm;
 
 @Service
 public class BoardService {
@@ -25,11 +24,6 @@ public class BoardService {
 		this.mapper = mapper;
 	}
 
-	/**
-	 * 게시판 등록 Service Method
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
 	public void addBoard(BoardForm boardForm) {
 		// 전역변수
 		
@@ -65,11 +59,7 @@ public class BoardService {
 		// return;
 	}
 
-	/**
-	 * 게시판 목록 조회
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
+
 	public Map<String, Object> getBoardList(int pageNum) {
 		// 전역변수
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -150,11 +140,7 @@ public class BoardService {
 		return result;
 	}
 	
-	/**
-	 * 게시판 상세 정보 조회
-	 * @since 2023. 3. 30.
-	 * @author Ji-Won Hong
-	 */
+
 	public Board getBoardDetail(int boardSeq) {
 		// 전역변수
 		Board board = null;
@@ -176,12 +162,7 @@ public class BoardService {
 		
 		return board;
 	}
-	
-	/**
-	 * 게시물 소유 확인 Service Method
-	 * @since 2023. 4. 5.
-	 * @author Ji-Won Hong
-	 */
+
 	public boolean checkBoardOwner(int boardSeq, String password) {
 		boolean result = false;
 		
@@ -205,12 +186,7 @@ public class BoardService {
 		
 		return result;
 	}
-	
-	/**
-	 * 수정폼 페이지 출력용 게시물 정보 조회 Service Method
-	 * @since 2023. 4. 5.
-	 * @author Ji-Won Hong
-	 */
+
 	public Board getBoardDetailForModify(int boardSeq) {
 		// 전역변수
 		Board board = null;
@@ -227,12 +203,7 @@ public class BoardService {
 		
 		return board;
 	}
-	
-	/**
-	 * 게시물 정보 수정 Service Method
-	 * @since 2023. 4. 5.
-	 * @author Ji-Won Hong
-	 */
+
 	public void updateBoard(BoardModifyForm boardForm) {
 		try {
 			// 수정용 파라미터 정제(DTO -> Domain)
@@ -250,12 +221,7 @@ public class BoardService {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * 게시물 정보 삭제 Service Method
-	 * @since 2023. 4. 5.
-	 * @author Ji-Won Hong
-	 */
+
 	public void deleteBoard(int boardSeq) {
 		try {
 			// 게시물 삭제

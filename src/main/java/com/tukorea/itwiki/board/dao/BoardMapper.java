@@ -1,11 +1,10 @@
-package com.tukorea.board.dao;
+package com.tukorea.itwiki.board.dao;
+
+import com.tukorea.itwiki.board.domain.Board;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
-
-import org.apache.ibatis.annotations.Mapper;
-
-import com.tukorea.board.domain.Board;
 
 @Mapper
 public interface BoardMapper {

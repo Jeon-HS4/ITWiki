@@ -1,7 +1,7 @@
-package com.tukorea.admin.member.service;
+package com.tukorea.itwiki.user.service;
 
-import com.tukorea.admin.member.dao.LoginDao;
-import com.tukorea.admin.member.dto.LoginForm;
+import com.tukorea.itwiki.user.dao.LoginDao;
+import com.tukorea.itwiki.user.dto.LoginForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

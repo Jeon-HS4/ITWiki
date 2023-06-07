@@ -51,6 +51,8 @@
 			</div>
 		</div>
 	</div>
+	<%-- footer 영역 --%>
+	<jsp:include page="../template/footer.jsp" />
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

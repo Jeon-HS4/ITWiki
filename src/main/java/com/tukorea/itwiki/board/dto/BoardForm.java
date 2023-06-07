@@ -1,4 +1,4 @@
-package com.tukorea.board.dto;
+package com.tukorea.itwiki.board.dto;
 
 public class BoardForm {
 
