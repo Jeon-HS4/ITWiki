@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface BoardMapper {
+public interface BoardDao {
 	
 	// 게시판 글 등록
 	public int insertBoard(Board board);

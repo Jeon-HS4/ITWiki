@@ -1,21 +1,33 @@
 package com.tukorea.itwiki.user.dto;
 
-public class SignupForm {
+import java.sql.Timestamp;
 
-    private String id;
+public class Signup {
+
+    private String userId;
     private String password;
-    private String passwordCheck;
-
     private String username;
     private String email;
+    private Timestamp userCreate;
+    private int role;
 
-    public String getPasswordCheck() {
-        return passwordCheck;
+
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPasswordCheck(String passwordCheck) {
-        this.passwordCheck = passwordCheck;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -32,19 +44,19 @@ public class SignupForm {
         this.email = email;
     }
 
-    public String getId() {
-        return id;
+    public Timestamp getUserCreate() {
+        return userCreate;
     }
 
-    public String getPassword() {
-        return password;
+    public void setUserCreate(Timestamp userCreate) {
+        this.userCreate = userCreate;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getRole() {
+        return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(int role) {
+        this.role = role;
     }
 }

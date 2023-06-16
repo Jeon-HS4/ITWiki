@@ -2,21 +2,23 @@ package com.tukorea.itwiki.board.domain;
 
 public class Board {
 
-	private int boardSeq; // 게시판 시퀀스
-	private String title; // 제목
-	private String writer; // 작성자
-	private String password; // 비밀번호
-	private String contents; // 내용
-	private int hits; // 조회수
-	private String regDt; // 등록일시
-	private String modDt; // 수정일시
+	private int pageId;
+	private String title;
+	private String content;
+	private String pageCreate;
+	private String pageUpdate;
+	private String userId;
+	private String category;
+	private String tag;
+	private int viewCount;
 
-	public int getBoardSeq() {
-		return boardSeq;
+
+	public int getPageId() {
+		return pageId;
 	}
 
-	public void setBoardSeq(int boardSeq) {
-		this.boardSeq = boardSeq;
+	public void setBoardId(int pageId) {
+		this.pageId = pageId;
 	}
 
 	public String getTitle() {
@@ -27,51 +29,59 @@ public class Board {
 		this.title = title;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getContent() {
+		return content;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPageCreate() {
+		return pageCreate;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPageCreate(String pageCreate) {
+		this.pageCreate = pageCreate;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getPageUpdate() {
+		return pageUpdate;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setPageUpdate(String pageUpdate) {
+		this.pageUpdate = pageUpdate;
 	}
 
-	public int getHits() {
-		return hits;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setHits(int hits) {
-		this.hits = hits;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
-	public String getRegDt() {
-		return regDt;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setRegDt(String regDt) {
-		this.regDt = regDt;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getModDt() {
-		return modDt;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setModDt(String modDt) {
-		this.modDt = modDt;
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
 }

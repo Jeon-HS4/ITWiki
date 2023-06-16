@@ -8,7 +8,7 @@
 
 <style type="text/css">
 div.container {
-	width: 1000px;
+	padding: 0 10px;
 }
 
 p.title {
@@ -77,6 +77,9 @@ div.button-area button:hover, div.button-area a.button:hover {
 </head>
 <body>
 	<div class="container">
+		<%-- header 영역 --%>
+		<jsp:include page="../template/header.jsp" />
+
 		<p class="title">Spring boot로 만들어보는 게시판</p>
 		<form action="/board/new" method="post">
 			<table class="form-table">
@@ -87,11 +90,11 @@ div.button-area button:hover, div.button-area a.button:hover {
 					</td>
 				</tr>
 				<tr>
-					<th>작성자<em class="red">*</em></th>
+					<th>카테고리<em class="red">*</em></th>
 					<td>
 						<input type="text" class="input-normal" name="writer" maxlength="50" placeholder="작성자를 입력해주세요.">
 					</td>
-					<th>비밀번호<em class="red">*</em></th>
+					<th>태그<em class="red">*</em></th>
 					<td>
 						<input type="password" class="input-normal" name="password" maxlength="20" placeholder="20자 이하의 비밀번호를 입력해주세요.">
 					</td>
@@ -109,6 +112,10 @@ div.button-area button:hover, div.button-area a.button:hover {
 			</div>
 			
 		</form>
+
+		<%-- footer 영역 --%>
+		<jsp:include page="../template/footer.jsp" />
+
 	</div>
 </body>
 </html>

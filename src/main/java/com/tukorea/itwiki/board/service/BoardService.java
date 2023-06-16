@@ -1,6 +1,6 @@
 package com.tukorea.itwiki.board.service;
 
-import com.tukorea.itwiki.board.dao.BoardMapper;
+import com.tukorea.itwiki.board.dao.BoardDao;
 import com.tukorea.itwiki.board.domain.Board;
 import com.tukorea.itwiki.board.dto.BoardForm;
 import com.tukorea.itwiki.board.dto.BoardList;
@@ -17,11 +17,11 @@ import java.util.Map;
 @Service
 public class BoardService {
 	
-	private final BoardMapper mapper;
+	private final BoardDao dao;
 	
 	@Autowired
-	public BoardService(BoardMapper mapper) {
-		this.mapper = mapper;
+	public BoardService(BoardDao dao) {
+		this.dao = dao;
 	}
 
 	public void addBoard(BoardForm boardForm) {
@@ -44,12 +44,12 @@ public class BoardService {
 			// 등록용 파라미터 정제(DTO -> Domain)
 			Board board = new Board();
 			board.setTitle(boardForm.getTitle());
-			board.setWriter(boardForm.getWriter());
-			board.setPassword(boardForm.getPassword());
-			board.setContents(boardForm.getContents());
+			board.setUserId(boardForm.getWriter());
+			board.setCategory(boardForm.getPassword());
+			board.setContent(boardForm.getContents());
 			
 			// 게시판 등록
-			int resultCount = mapper.insertBoard(board);
+			int resultCount = dao.insertBoard(board);
 			System.out.println("게시판 등록 완료 (건수 : " + resultCount + "건)");
 			
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class BoardService {
 
 		try {
 			// 목록 조회용 파라미터 설정
-			int listNum = 10; // 게시판 페이지 별 건수 설정
+			int listNum = 7; // 게시판 페이지 별 건수 설정
 			int startNum = (pageNum - 1) * listNum; // 게시판 목록 조회 시작점 설정
 			
 			Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -74,13 +74,13 @@ public class BoardService {
 			paramMap.put("listNum", listNum);
 			
 			// 게시물 총 건수 조회
-			int totalCount = mapper.selectBoardListTotalCount(paramMap);
+			int totalCount = dao.selectBoardListTotalCount(paramMap);
 			result.put("totalCount", totalCount);
 			
 			System.out.println("게시물 총 건수 조회 완료(" + totalCount + "건)");
 			
 			// 게시판 목록 조회
-			List<Board> dbBoardList = mapper.selectBoardList(paramMap);
+			List<Board> dbBoardList = dao.selectBoardList(paramMap);
 			
 			// 도메인에서 게시판 목록용 DTO로 전환
 			List<BoardList> boardList = new ArrayList<BoardList>();
@@ -89,12 +89,13 @@ public class BoardService {
 			for (Board board : dbBoardList) {
 				BoardList listObj = new BoardList();
 				
-				listObj.setNo(listStartNum++);// NO
-				listObj.setBoardSeq(board.getBoardSeq()); // 게시물 시퀀스
+				listObj.setBoardNo(listStartNum++);// NO
+				listObj.setPageId(board.getPageId()); // 게시물 시퀀스
 				listObj.setTitle(board.getTitle()); // 제목
-				listObj.setWriter(board.getWriter()); // 작성자
-				listObj.setHits(board.getHits()); // 조회수
-				listObj.setRegDt(board.getRegDt()); // 등록일시
+				listObj.setCategory(board.getCategory()); // 작성자
+				listObj.setTag(board.getTag());
+				listObj.setViewCount(board.getViewCount()); // 조회수
+				listObj.setPageUpdate(board.getPageUpdate()); // 최종 수정
 				
 				boardList.add(listObj);
 			}
@@ -147,12 +148,12 @@ public class BoardService {
 		
 		try {
 			// 게시판 상세 정보 조회
-			board = mapper.selectBoardInfo(boardSeq);
+			board = dao.selectBoardInfo(boardSeq);
 			
 			System.out.println("게시판 상세 조회 완료");
 			
 			// 해당 게시물 조회수 1 증가
-			mapper.updateBoardHits(boardSeq);
+			dao.updateBoardHits(boardSeq);
 			
 			System.out.println("게시물 조회수 증가 완료");
 			
@@ -173,7 +174,7 @@ public class BoardService {
 			paramMap.put("password", password);
 			
 			// 일치하는 게시물 있는지 확인
-			int totalCount = mapper.selectBoardPasswordForCheck(paramMap);
+			int totalCount = dao.selectBoardPasswordForCheck(paramMap);
 			System.out.println("게시물 총 건수 조회 완료(" + totalCount + "건)");
 			
 			if (totalCount > 0) {
@@ -193,7 +194,7 @@ public class BoardService {
 		
 		try {
 			// 게시판 상세 정보 조회
-			board = mapper.selectBoardInfo(boardSeq);
+			board = dao.selectBoardInfo(boardSeq);
 			
 			System.out.println("게시판 상세 조회 완료");
 			
@@ -208,13 +209,13 @@ public class BoardService {
 		try {
 			// 수정용 파라미터 정제(DTO -> Domain)
 			Board board = new Board();
-			board.setBoardSeq(boardForm.getBoardSeq());
+			board.setBoardId(boardForm.getBoardSeq());
 			board.setTitle(boardForm.getTitle());
-			board.setWriter(boardForm.getWriter());
-			board.setContents(boardForm.getContents());
+			board.setUserId(boardForm.getWriter());
+			board.setContent(boardForm.getContents());
 			
 			// 게시판 수정
-			int resultCount = mapper.updateBoard(board);
+			int resultCount = dao.updateBoard(board);
 			System.out.println("게시판 수정 완료 (건수 : " + resultCount + "건)");
 			
 		} catch (Exception e) {
@@ -225,7 +226,7 @@ public class BoardService {
 	public void deleteBoard(int boardSeq) {
 		try {
 			// 게시물 삭제
-			mapper.deleteBoard(boardSeq);
+			dao.deleteBoard(boardSeq);
 			
 			System.out.println("게시물 삭제 완료");
 			

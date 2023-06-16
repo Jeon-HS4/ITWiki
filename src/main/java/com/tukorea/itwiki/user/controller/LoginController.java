@@ -1,6 +1,7 @@
 package com.tukorea.itwiki.user.controller;
 
 import com.tukorea.itwiki.user.dto.LoginForm;
+import com.tukorea.itwiki.user.dto.SignupForm;
 import com.tukorea.itwiki.user.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login() {
-        return "common/login/login";
+        return "login/login";
     }
 
 
@@ -39,10 +40,9 @@ public class LoginController {
         if ("00".equals(result_cd)) {
             HttpSession session = request.getSession();
             HashMap<String, Object> memberMap = (HashMap<String, Object>) resultMap.get("member");
-            session.setAttribute("sMemberId", memberMap.get("MEMBER_ID"));
-            session.setAttribute("sName", memberMap.get("NAME"));
-            ((HttpSession) session).setAttribute("sEmail", memberMap.get("EMAIL"));
-            session.setAttribute("sMemberType", memberMap.get("MEMBER_TYPE"));
+            session.setAttribute("sUserId", memberMap.get("userId"));
+            session.setAttribute("sUsername", memberMap.get("username"));
+            ((HttpSession) session).setAttribute("sEmail", memberMap.get("email"));
         }
         return resultMap;
     }
@@ -55,6 +55,25 @@ public class LoginController {
             session.invalidate();
         }
         return "redirect:/";
+    }
+    @GetMapping("/signUp")
+    public String signUp(){return "login/signUp";}
+
+    @ResponseBody
+    @PostMapping("/signup")
+    public HashMap<String, Object> signupAjax(SignupForm signupForm, HttpServletRequest request) {
+        // login Service 메서드 호출
+        HashMap<String, Object> resultMap = service.signup(signupForm);
+        // 성공 시 session에 회원 정보 저장
+        String result_cd = resultMap.get("result_cd").toString();
+        if ("00".equals(result_cd)) {
+            HttpSession session = request.getSession();
+            HashMap<String, Object> memberMap = (HashMap<String, Object>) resultMap.get("member");
+            session.setAttribute("sUserId", memberMap.get("userId"));
+            session.setAttribute("sUsername", memberMap.get("username"));
+            ((HttpSession) session).setAttribute("sEmail", memberMap.get("email"));
+        }
+        return resultMap;
     }
 
 }

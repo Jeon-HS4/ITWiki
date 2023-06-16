@@ -2,27 +2,29 @@ package com.tukorea.itwiki.board.dto;
 
 public class BoardList {
 
-	private int no; // 게시판 번호
-	private int boardSeq; // 게시판 시퀀스
-	private String title; // 제목
-	private String writer; // 작성자
-	private int hits; // 조회수
-	private String regDt; // 등록일시
+	private int boardNo; // 게시판 번호
+	private int pageId;
+	private String title;
+	private String pageUpdate;
+	private String category;
+	private String tag;
+	private int viewCount;
 
-	public int getBoardSeq() {
-		return boardSeq;
+
+	public int getBoardNo() {
+		return boardNo;
 	}
 
-	public int getNo() {
-		return no;
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
 	}
 
-	public void setNo(int no) {
-		this.no = no;
+	public int getPageId() {
+		return pageId;
 	}
 
-	public void setBoardSeq(int boardSeq) {
-		this.boardSeq = boardSeq;
+	public void setPageId(int pageId) {
+		this.pageId = pageId;
 	}
 
 	public String getTitle() {
@@ -33,27 +35,35 @@ public class BoardList {
 		this.title = title;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getPageUpdate() {
+		return pageUpdate;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setPageUpdate(String pageUpdate) {
+		this.pageUpdate = pageUpdate;
 	}
 
-	public int getHits() {
-		return hits;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setHits(int hits) {
-		this.hits = hits;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getRegDt() {
-		return regDt;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setRegDt(String regDt) {
-		this.regDt = regDt;
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public int getViewCount() {
+		return viewCount;
+	}
+
+	public void setViewCount(int viewCount) {
+		this.viewCount = viewCount;
 	}
 }

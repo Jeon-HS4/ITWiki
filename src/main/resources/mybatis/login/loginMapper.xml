@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="">
-	
+<mapper namespace="com.tukorea.itwiki.user.dao.LoginDao">
+    <select id="selectMemberForLogin" resultType="java.util.HashMap">
+        SELECT
+            userId,
+            username,
+            email,
+            role
+        FROM
+            USER
+        WHERE
+            userId = #{id}
+            AND password = #{password}
+    </select>
+    <select id="checkDuplicateMember" resultType="java.util.HashMap">
+        SELECT
+            userId
+        FROM
+            USER
+        WHERE
+            userId = #{id}
+    </select>
+    <insert id="insertNewUser" parameterType="com.tukorea.itwiki.user.dto.SignupForm">
+        INSERT INTO USER(
+            USERID,
+            PASSWORD,
+            USERNAME,
+            EMAIL,
+            userCreate,
+            ROLE
+        ) VALUES(
+            #{userId},
+            #{password},
+            #{username},
+            #{email},
+            now(),
+            3
+        )
+    </insert>
 </mapper>

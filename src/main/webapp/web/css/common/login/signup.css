@@ -1,28 +1,38 @@
 @charset "UTF-8";
 
-.contents .login-wrap {
+.contents .signup-wrap {
     width: 500px;
     margin: 0 auto;
     border: 1px solid #838383;
     padding: 30px 20px;
 }
 
-.contents .login-wrap .login input {
-    width: 100%;
-    padding: 3px 5px;
+.contents .signup-wrap .signup input {
+    width: 70%;
+    padding: 15px 5px;
     margin-bottom: 5px;
+    margin-top: 20px;
     height: 30px;
     box-sizing: border-box;
 }
 
-.contents .login-wrap .login .alarm {
+.contents .signup-wrap .signup input_info {
+    width: 30%;
+    padding: 15px 5px;
+    margin-bottom: 5px;
+    margin-top: 20px;
+    height: 30px;
+    box-sizing: border-box;
+}
+
+.contents .signup-wrap .signup .alarm {
 	font-size: 12px;
 	color: red;
 	display: none;
 	margin-bottom:5px;
 }
 
-.contents .login-wrap .login .login-button {
+.contents .signup-wrap .signup .signup-button {
 	text-decoration: none;
 	border: 1px solid #a1a1a1;
     background: #efefef;
@@ -34,22 +44,22 @@
     margin: 20px 0;
     color: #000;
 }
-.contents .login-wrap .login .login-button:hover {
+.contents .signup-wrap .signup .signup-button:hover {
 	background: #dfdfdf;
 }
 
-.contents .login-wrap .sub-menu {
+.contents .signup-wrap .sub-menu {
 	text-align: center;
 }
 
-.contents .login-wrap .sub-menu a.menu {
+.contents .signup-wrap .sub-menu a.menu {
 	font-size: 13px;
     text-decoration: none;
     color: #000;
     cursor: pointer;
     margin-right: 5px;
 }
-.contents .login-wrap .sub-menu a.menu:hover {
+.contents .signup-wrap .sub-menu a.menu:hover {
 	color: #878787;
 	text-decoration: underline;
 }

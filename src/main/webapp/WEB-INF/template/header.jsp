@@ -7,16 +7,17 @@
     <div class="menu-wrap">
         <div class="logo">
             <a href="/">
-                <img src="web/images/test_img.png" style="width: 5rem; height: 50px" alt="Main Logo"></a>
+                <img src="/web/images/test_img.png" style="width: 5rem; height: 50px" alt="Main Logo"></a>
         </div>
         <c:choose>
-            <c:when test="${sessionScope.sMemberId ne null}">
+            <c:when test="${sessionScope.sUserId ne null}">
+                <a href="/mypage" class="menu"><strong>${sessionScope.sUsername}</strong>님 안녕하세요.</a>
                 <a href="/logout" class="menu">로그아웃</a>
             </c:when>
             <c:otherwise>
                 <div class="login_links">
                     <a href="/login" class="menu">로그인</a>
-                    <a href="/sign_up" class="menu">회원가입</a>
+                    <a href="/signUp" class="menu">회원가입</a>
                 </div>
             </c:otherwise>
         </c:choose>

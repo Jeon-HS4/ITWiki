@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 
-<c:if test="${sessionScope.sMemberId ne null}">
+<c:if test="${sessionScope.sUserId ne null}">
 
 	<script type="text/javascript">
 		alert("잘못된 접근입니다.");
@@ -45,9 +45,9 @@
 				<a href="#" id="btn_login" class="login-button">로그인하기</a>
 			</div>
 			<div class="sub-menu">
-				<a href="#" class="menu preparing">회원가입</a>
-				<a href="#" class="menu preparing">아이디 찾기</a>
-				<a href="#" class="menu preparing">비밀번호 찾기</a>
+				<a href="/signUp" class="menu">회원가입</a>
+				<a href="/searchId" class="menu">아이디 찾기</a>
+				<a href="/searchPassword" class="menu">비밀번호 찾기</a>
 			</div>
 		</div>
 	</div>
@@ -78,25 +78,6 @@ $(document).ready(function() {
 
 	<%-- 로그인 버튼 클릭 --%>
 	$('#btn_login').on('click',function (){
-
-	<%--
-	%('#btn_login').on('click', function (){
-			if ($.trim($('#id_input').val()) == ''){
-				alert('아이디를 입력해주세요.');
-				$('#id_input').siblings('div.alarm').show();
-				return false;
-			}else{
-				$('#id_input').siblings('div.alarm').hide();
-			}
-			if ($.trim($('#pwd_input').val()) == '') {
-				alert('비밀번호를 입력해주세요.');
-				$('#pwd_input').siblings('div.alarm').show();
-				return false;
-			} else {
-				$('#pwd_input').siblings('div.alarm').hide();
-			}
-		});
-	--%>
 		$('#btn_login').on('click', function() {
 			<%-- form validation --%>
 			var validTF = true;
