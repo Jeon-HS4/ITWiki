@@ -1,13 +1,12 @@
 package com.tukorea.itwiki.board.dto;
 
-public class BoardForm {
+import java.util.Date;
+
+public class RevisionForm {
 
 	private int pageId; // 페이지 아이디
-	private String title; // 제목
-	private String category; // 카테고리
-	private String tag; // 태그
+	private String userId; // 유저 아이디
 	private String content; // 내용
-	private String userName;	// 작성자
 
 	public int getPageId() {
 		return pageId;
@@ -17,28 +16,12 @@ public class BoardForm {
 		this.pageId = pageId;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public String getTag() {
-		return tag;
-	}
-
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getContent() {
@@ -49,11 +32,4 @@ public class BoardForm {
 		this.content = content;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 }

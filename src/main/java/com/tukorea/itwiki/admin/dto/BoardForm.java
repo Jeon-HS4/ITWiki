@@ -1,4 +1,4 @@
-package com.tukorea.itwiki.board.dto;
+package com.tukorea.itwiki.admin.dto;
 
 public class BoardForm {
 

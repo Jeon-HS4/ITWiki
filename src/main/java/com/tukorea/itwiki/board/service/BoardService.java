@@ -5,6 +5,7 @@ import com.tukorea.itwiki.board.domain.Board;
 import com.tukorea.itwiki.board.dto.BoardForm;
 import com.tukorea.itwiki.board.dto.BoardList;
 import com.tukorea.itwiki.board.dto.BoardModifyForm;
+import com.tukorea.itwiki.board.dto.RevisionForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -25,32 +26,27 @@ public class BoardService {
 	}
 
 	public void addBoard(BoardForm boardForm) {
-		// 전역변수
-		
+
 		try {
 			// 파라미터 검증
 			if (!StringUtils.hasText(boardForm.getTitle())) {
 				throw new Exception("제목 입력값이 없습니다.");
 			}
-			
-			if (!StringUtils.hasText(boardForm.getWriter())) {
-				throw new Exception("작성자 입력값이 없습니다.");
+			if (!StringUtils.hasText(boardForm.getUserName())) {
+				throw new Exception("로그인 후 이용해주세요.");
 			}
-			
-			if (!StringUtils.hasText(boardForm.getPassword())) {
-				throw new Exception("비밀번호 입력값이 없습니다.");
+			if (!StringUtils.hasText(boardForm.getContent())) {
+				throw new Exception("입력된 내용이 없습니다.");
 			}
 			
 			// 등록용 파라미터 정제(DTO -> Domain)
 			Board board = new Board();
 			board.setTitle(boardForm.getTitle());
-			board.setUserId(boardForm.getWriter());
-			board.setCategory(boardForm.getPassword());
-			board.setContent(boardForm.getContents());
-			
-			// 게시판 등록
-			int resultCount = dao.insertBoard(board);
-			System.out.println("게시판 등록 완료 (건수 : " + resultCount + "건)");
+			board.setCategory(boardForm.getCategory());
+			board.setTag(boardForm.getTag());
+			board.setContent(boardForm.getContent());
+			board.setUserId(boardForm.getUserName());
+			int result = dao.insertBoard(board);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -60,24 +56,43 @@ public class BoardService {
 	}
 
 
-	public Map<String, Object> getBoardList(int pageNum) {
-		// 전역변수
+	public Map<String, Object> getBoardList(int pageNum, String category, String sort, String keyword) {
 		Map<String, Object> result = new HashMap<String, Object>();
 
 		try {
-			// 목록 조회용 파라미터 설정
-			int listNum = 7; // 게시판 페이지 별 건수 설정
-			int startNum = (pageNum - 1) * listNum; // 게시판 목록 조회 시작점 설정
+			int listNum = 7; // 페이지 당 표시할 목록
+			int startNum = (pageNum - 1) * listNum;
+			String categorySQL;
+			String sortSQL;
+			String keywordSQL;
 			
 			Map<String, Object> paramMap = new HashMap<String, Object>();
 			paramMap.put("startNum", startNum);
 			paramMap.put("listNum", listNum);
+
+			// 검색 조건에 따른 쿼리 작업
+			if(category.equals("category")){
+				categorySQL = "1";
+			}else{
+				categorySQL = "category = '" + category + "'";
+			}
+			if(!keyword.equals("")){
+				keywordSQL = keyword;
+			}else{
+				keywordSQL = "";
+			}
+			if(sort == null || sort.isEmpty()){
+				sort = "pageId";
+			}
+			sortSQL = sort;
+
+			paramMap.put("category", categorySQL);
+			paramMap.put("keyword", keywordSQL);
+			paramMap.put("sort", sortSQL);
 			
 			// 게시물 총 건수 조회
 			int totalCount = dao.selectBoardListTotalCount(paramMap);
 			result.put("totalCount", totalCount);
-			
-			System.out.println("게시물 총 건수 조회 완료(" + totalCount + "건)");
 			
 			// 게시판 목록 조회
 			List<Board> dbBoardList = dao.selectBoardList(paramMap);
@@ -89,36 +104,28 @@ public class BoardService {
 			for (Board board : dbBoardList) {
 				BoardList listObj = new BoardList();
 				
-				listObj.setBoardNo(listStartNum++);// NO
-				listObj.setPageId(board.getPageId()); // 게시물 시퀀스
-				listObj.setTitle(board.getTitle()); // 제목
-				listObj.setCategory(board.getCategory()); // 작성자
+				listObj.setBoardNo(listStartNum++);
+				listObj.setPageId(board.getPageId());
+				listObj.setTitle(board.getTitle());
+				listObj.setCategory(board.getCategory());
 				listObj.setTag(board.getTag());
-				listObj.setViewCount(board.getViewCount()); // 조회수
-				listObj.setPageUpdate(board.getPageUpdate()); // 최종 수정
+				listObj.setViewCount(board.getViewCount());
+				listObj.setPageUpdate(board.getPageUpdate());
 				
 				boardList.add(listObj);
 			}
 			
 			result.put("boardList", boardList);
 			
-			System.out.println("게시물 목록 조회 완료");
-			
 			// 게시판 페이징 생성
-			// 1. 페이징 계산용 변수 설정
 			int pageUnitNum = 5;
-			
-			// 2. 총 페이징 계산
 			int totalPagingNum = (totalCount / listNum) + (totalCount % listNum == 0 ? 0 : 1);
 			
-			// 3. 배열 값 비교하여 페이징 시작 번호 return
 			int totalPagingUnitNum = (totalPagingNum / pageUnitNum) + (totalPagingNum % pageUnitNum == 0 ? 0 : 1);
 			for (int i=0; i<totalPagingUnitNum; i++) {
-				// 단위 별 시작 페이지 번호와 종료 페이지 번호를 구한 뒤 비교하여 포함되는 페이징 그룹 return
 				int startUnitNum = (i * pageUnitNum) + 1;
 				int endUnitNum = (i + 1) * pageUnitNum;
 				
-				// 페이징 단위 종료 번호가 총 페이징 번호보다 클 경우 총 페이징 번호가 마지막이 됨
 				if (endUnitNum > totalPagingNum) {
 					endUnitNum = totalPagingNum;
 				}
@@ -127,12 +134,9 @@ public class BoardService {
 					result.put("startUnitNum", startUnitNum);
 					result.put("endUnitNum", endUnitNum);
 					result.put("totalPagingNum", totalPagingNum);
-					
 					break;
 				}
 			}
-			
-			System.out.println("게시판 페이징 설정 완료");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -142,20 +146,15 @@ public class BoardService {
 	}
 	
 
-	public Board getBoardDetail(int boardSeq) {
-		// 전역변수
+	public Board getBoardDetail(int pageId) {
 		Board board = null;
 		
 		try {
-			// 게시판 상세 정보 조회
-			board = dao.selectBoardInfo(boardSeq);
-			
-			System.out.println("게시판 상세 조회 완료");
-			
-			// 해당 게시물 조회수 1 증가
-			dao.updateBoardHits(boardSeq);
-			
-			System.out.println("게시물 조회수 증가 완료");
+			// 상세 정보 조회 메소드
+			board = dao.selectBoardInfo(pageId);
+
+			// 조회수 증가 메소드
+			dao.updateBoardViewCount(pageId);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -164,39 +163,12 @@ public class BoardService {
 		return board;
 	}
 
-	public boolean checkBoardOwner(int boardSeq, String password) {
-		boolean result = false;
-		
-		try {
-			// 게시물 패스워드 일치 여부 확인
-			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("boardSeq", boardSeq);
-			paramMap.put("password", password);
-			
-			// 일치하는 게시물 있는지 확인
-			int totalCount = dao.selectBoardPasswordForCheck(paramMap);
-			System.out.println("게시물 총 건수 조회 완료(" + totalCount + "건)");
-			
-			if (totalCount > 0) {
-				result = true;
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
-	public Board getBoardDetailForModify(int boardSeq) {
-		// 전역변수
+	public Board getBoardDetailForModify(int pageId) {
 		Board board = null;
 		
 		try {
-			// 게시판 상세 정보 조회
-			board = dao.selectBoardInfo(boardSeq);
-			
-			System.out.println("게시판 상세 조회 완료");
+			// 게시판 정보 조회
+			board = dao.selectBoardInfo(pageId);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -209,29 +181,58 @@ public class BoardService {
 		try {
 			// 수정용 파라미터 정제(DTO -> Domain)
 			Board board = new Board();
-			board.setBoardId(boardForm.getBoardSeq());
+			board.setPageId(boardForm.getPageId());
 			board.setTitle(boardForm.getTitle());
-			board.setUserId(boardForm.getWriter());
-			board.setContent(boardForm.getContents());
-			
-			// 게시판 수정
+			board.setCategory(boardForm.getCategory());
+			board.setTag(boardForm.getTag());
+			board.setContent(boardForm.getContent());
+
 			int resultCount = dao.updateBoard(board);
-			System.out.println("게시판 수정 완료 (건수 : " + resultCount + "건)");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void deleteBoard(int boardSeq) {
+	public void deleteBoard(int pageId) {
 		try {
 			// 게시물 삭제
-			dao.deleteBoard(boardSeq);
-			
-			System.out.println("게시물 삭제 완료");
+			dao.deleteBoard(pageId);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	public void insertRevision(BoardModifyForm boardForm) {
+		try {
+			// 수정용 파라미터 정제(DTO -> Domain)
+			RevisionForm revisionForm = new RevisionForm();
+			revisionForm.setPageId(boardForm.getPageId());
+			revisionForm.setContent(boardForm.getContent());
+			// 변경사항 게시판에 삽입
+			int resultCount = dao.insertRevision(revisionForm);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<String> getAllCategory() {
+		// 카테고리 선택을 위한 모든 목록 가져오기
+		List<String> categories = dao.getAllCategory();
+		return categories;
+	}
+
+	public void voteBoard(int pageId, String userId) {
+		try {
+			// 게시물 추천
+			dao.updateBoardVote(pageId, userId);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
 }

@@ -17,7 +17,7 @@ public class Board {
 		return pageId;
 	}
 
-	public void setBoardId(int pageId) {
+	public void setPageId(int pageId) {
 		this.pageId = pageId;
 	}
 

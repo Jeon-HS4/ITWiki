@@ -1,29 +1,27 @@
-/* style.css */
+/* footer.css */
 
 .footer {
-    background-color: #f5f5f5;
+    background-color: #f7f7f7;
     padding: 40px 0;
-    margin-top: 30px;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
 }
 
 .footer h4 {
     font-size: 18px;
-    margin-bottom: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-.footer p {
+.footer p,
+.footer ul {
     font-size: 14px;
     margin-bottom: 10px;
 }
 
-.footer ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
 .footer ul li {
-    margin-bottom: 8px;
+    list-style-type: none;
+    margin-bottom: 5px;
 }
 
 .footer ul li a {
@@ -36,18 +34,19 @@
 }
 
 .footer hr {
-    border-color: #ccc;
-    margin-top: 30px;
-    margin-bottom: 20px;
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
 }
 
 .footer p.text-center {
     font-size: 12px;
-    margin-bottom: 0;
+    color: #777;
 }
 
 .footer p.text-center a {
     color: #333;
+    text-decoration: none;
 }
 
 .footer p.text-center a:hover {

@@ -1,4 +1,4 @@
-package com.tukorea.itwiki.board.domain;
+package com.tukorea.itwiki.admin.domain;
 
 public class Board {
 

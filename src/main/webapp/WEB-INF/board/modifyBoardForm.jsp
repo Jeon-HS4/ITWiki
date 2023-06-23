@@ -8,7 +8,7 @@
 
 <style type="text/css">
 div.container {
-	width: 1000px;
+	padding: 0 10px;
 }
 
 p.title {
@@ -77,27 +77,35 @@ div.button-area button:hover, div.button-area a.button:hover {
 </head>
 <body>
 	<div class="container">
-		<p class="title">Spring boot로 만들어보는 게시판</p>
+		<%-- header 영역 --%>
+		<jsp:include page="../template/header.jsp" />
+		<p class="title">Wiki 수정하기</p>
 		<form action="/board/modify" method="post">
-			<input type="hidden" id="board_seq" name="boardSeq" value="${board.boardSeq}" />
+			<input type="hidden" id="pageId" name="pageId" value="${board.pageId}" />
 		
 			<table class="form-table">
 				<tr>
-					<th>제목<em class="red">*</em></th>
+					<th>제목</th>
 					<td>
 						<input type="text" class="input-normal" name="title" maxlength="100" value="${board.title}" placeholder="제목을 입력해주세요.">
 					</td>
 				</tr>
 				<tr>
-					<th>작성자<em class="red">*</em></th>
+					<th>카테고리</th>
 					<td>
-						<input type="text" class="input-normal" name="writer" maxlength="50" value="${board.writer}" placeholder="작성자를 입력해주세요.">
+						<input type="text" class="input-normal" name="category" readonly maxlength="50" value="${board.category}">
+					</td>
+				</tr>
+				<tr>
+					<th>태그</th>
+					<td>
+						<input type="text" class="input-normal" name="category" readonly maxlength="50" value="${board.tag}">
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea class="textarea-normal" name="contents" placeholder="내용을 입력해주세요.">${board.contents}</textarea>
+						<textarea class="textarea-normal" name="content" placeholder="내용을 입력해주세요.">${board.content}</textarea>
 					</td>
 				</tr>
 			</table>
@@ -107,6 +115,8 @@ div.button-area button:hover, div.button-area a.button:hover {
 			</div>
 			
 		</form>
+			<%-- footer 영역 --%>
+			<jsp:include page="../template/footer.jsp" />
 	</div>
 </body>
 </html>

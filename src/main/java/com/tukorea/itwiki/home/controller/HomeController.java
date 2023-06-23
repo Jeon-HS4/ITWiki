@@ -10,6 +10,4 @@ public class HomeController {
 	public String home() {
 		return "home/home";
 	}
-	@GetMapping("/test")
-	public String tested(){return "home//test";}
 }

@@ -1,0 +1,80 @@
+-- DB 생성 쿼리문
+CREATE TABLE `User` (
+    `userId` VARCHAR(50) NOT NULL,
+    `username` VARCHAR(50) NOT NULL,
+    `password` VARCHAR(100),
+    `email` VARCHAR(100),
+    `userCreate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `role` INT NOT NULL DEFAULT 3 COMMENT '1: Admin, 2: Moderator, 3: Regular User',
+    PRIMARY KEY (`userId`)
+);
+
+CREATE TABLE WikiPage (
+  pageId INT NOT NULL AUTO_INCREMENT,
+  title VARCHAR(255),
+  content TEXT,
+  pageCreate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  pageUpdate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  userId VARCHAR(50) NOT NULL,
+  category VARCHAR(50),
+  tag VARCHAR(100),
+  viewCount INT DEFAULT 0,
+  PRIMARY KEY (pageId),
+  FOREIGN KEY (userId) REFERENCES User (userId)
+);
+
+
+CREATE TABLE `Revision` (
+    `revisionId` INT NOT NULL AUTO_INCREMENT,
+    `content` TEXT,
+    `revisionUpdate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `pageId` INT NOT NULL,
+    `userId` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`revisionId`),
+    FOREIGN KEY (`pageId`) REFERENCES `WikiPage` (`pageId`) ON DELETE CASCADE,
+    FOREIGN KEY (`userId`) REFERENCES `User` (`userId`)
+);
+
+CREATE TABLE `Comment` (
+    `commentId` INT NOT NULL AUTO_INCREMENT,
+    `commentContent` TEXT,
+    `commentCreate` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `pageId` INT NOT NULL,
+    `userId` VARCHAR(50) NOT NULL,
+    PRIMARY KEY (`commentId`),
+    FOREIGN KEY (`pageId`) REFERENCES `WikiPage` (`pageId`) ON DELETE CASCADE,
+    FOREIGN KEY (`userId`) REFERENCES `User` (`userId`)
+);
+
+CREATE TABLE `Vote` (
+    `voteId` INT NOT NULL AUTO_INCREMENT,
+    `userId` VARCHAR(50) NOT NULL,
+    `pageId` INT NOT NULL,
+    `voteType` ENUM('upvote', 'downvote'),
+    PRIMARY KEY (`voteId`),
+    FOREIGN KEY (`userId`) REFERENCES `User` (`userId`),
+    FOREIGN KEY (`pageId`) REFERENCES `WikiPage` (`pageId`) ON DELETE CASCADE
+);
+
+
+
+
+
+User Ex
+
+INSERT INTO user (userId, username, password, email, userCreate, role) VALUES
+(1, 'John', 'password123', 'john@example.com', '2023-06-16 10:00:00', 1),
+(2, 'Jane', 'password456', 'jane@example.com', '2023-06-16 11:30:00', 2),
+(3, 'Mike', 'password789', 'mike@example.com', '2023-06-16 12:45:00', 1);
+
+
+
+Page Ex
+
+INSERT INTO WikiPage (title, content, userId, category, tag, viewCount)
+VALUES
+  ('Page 1', 'Content for Page 1', '1', 'Category 1', 'Tag 1, Tag 2', 10),
+  ('Page 2', 'Content for Page 2', '2', 'Category 2', 'Tag 2, Tag 3', 5),
+  ('Page 3', 'Content for Page 3', '3', 'Category 1', 'Tag 1, Tag 3', 8),
+  ('Page 4', 'Content for Page 4', '2', 'Category 3', 'Tag 4', 3),
+  ('Page 5', 'Content for Page 5', '1', 'Category 2', 'Tag 2, Tag 4', 12);

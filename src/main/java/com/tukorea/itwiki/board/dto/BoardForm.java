@@ -2,10 +2,20 @@ package com.tukorea.itwiki.board.dto;
 
 public class BoardForm {
 
+	private int pageId; // 페이지 아이디
 	private String title; // 제목
-	private String writer; // 작성자
-	private String password; // 비밀번호
-	private String contents; // 내용
+	private String category; // 카테고리
+	private String tag; // 태그
+	private String content; // 내용
+	private String userName;	// 작성자
+
+	public int getPageId() {
+		return pageId;
+	}
+
+	public void setPageId(int pageId) {
+		this.pageId = pageId;
+	}
 
 	public String getTitle() {
 		return title;
@@ -15,28 +25,35 @@ public class BoardForm {
 		this.title = title;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }

@@ -8,7 +8,7 @@
 
 <style type="text/css">
 div.container {
-	width: 1000px;
+	padding: 0 10px;
 }
 
 p.title {
@@ -83,106 +83,46 @@ div.check-wrap div.check-form {
 </head>
 <body>
 	<div class="container">
-		<p class="title">Spring boot로 만들어보는 게시판</p>
+		<%-- header 영역 --%>
+		<jsp:include page="../template/header.jsp" />
+		<p class="title">Wiki 상세보기</p>
+
 		<table class="form-table">
 			<tr>
 				<th>제목</th>
 				<td>${board.title}</td>
 			</tr>
 			<tr>
-				<th>작성자</th>
-				<td>${board.writer}</td>
+				<th>카테고리</th>
+				<td>${board.category}</td>
+			</tr>
+			<tr>
+				<th>태그</th>
+				<td>${board.tag}</td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td class="long-text">${board.contents}</td>
+				<td class="long-text">${board.content}</td>
 			</tr>
 		</table>
 		<div class="button-area">
-			<a class="button left btn-action" data-action-type="modify">수정</a>
-			<a class="button left btn-action" data-action-type="delete">삭제</a>
+			<a class="button" id="vote" href="/board/vote">즐겨찾기</a>
+			<a class="button" href="/board/modifyForm?pageId=${board.pageId}">수정</a>
 			<a class="button" href="/board/list">게시판 목록</a>
 		</div>
 	</div>
-	
-	<%-- 비밀번호 확인용 영역 --%>
-	<div id="check_wrap" class="check-wrap">
-		<form id="action_form" method="post">
-			<div class="check-form">
-				<input type="hidden" id="board_seq" name="boardSeq" value="${board.boardSeq}" />
-				<input type="hidden" id="action_type" class="initialized" value="" />
-				
-				<table class="form-table">
-					<tr>
-						<th>비밀번호</th>
-						<td>
-							<input type="password" id="board_password" class="initialized" placeholder="게시물 등록시 입력했던 비밀번호를 입력해주세요." style="width: 400px;" />
-						</td>
-					</tr>
-				</table>
-				<div class="button-area">
-					<a class="button" id="btn_check_password">비밀번호 확인</a>
-					<a class="button" id="btn_close">닫기</a>
-				</div>
-			</div>
-		</form>
-	</div>
-	
+	<%-- footer 영역 --%>
+	<jsp:include page="../template/footer.jsp" />
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		
-		$('.btn-action').on('click', function() {
-			// action type 설정
-			$('#action_type').val($(this).data('action-type'));
-			
-			$('#check_wrap').show();
-		});
-		
-		$('#btn_close').on('click', function() {
-			// form 초기화
-			$('#check_wrap input.initialized').val('');
-			
-			// 레이어팝업 영역 hide
-			$('#check_wrap').hide();
-		});
-		
-		$('#btn_check_password').on('click', function() {
-			$.ajax({
-				url: '/board/checkPassword',
-				type: 'POST',
-				data: {
-					boardSeq : $('#board_seq').val(),
-					password : $('#board_password').val()
-				},
-				success: function (data) {
-					if (data == true) {
-						// 비밀번호 일치
-						var action_type = $('#action_type').val();
-						console.log('action_type : ' + action_type);
-						
-						if (action_type == 'modify') {
-							// 수정폼으로 이동
-							$('#action_form').attr('action', '/board/modifyForm');
-							$('#action_form').submit();
-							
-						} else if (action_type == 'delete') {
-							// 삭제 진행
-							$('#action_form').attr('action', '/board/delete');
-							$('#action_form').submit();
-						}
-						
-					} else {
-						// 비밀번호 불일치
-						alert('비밀번호가 일치하지 않습니다.');
-					}
-				},
-				error: function(error) {
-					console.log(error);
-				}
+		$(document).ready(function() {
+			var voteButton = document.getElementById("vote");
+			voteButton.removeAttribute('href');
+			voteButton.addEventListener('click', function(event) {
+				event.preventDefault();
+				alert("추가 예정인 기능입니다.");
 			});
 		});
-	});
 	</script>
 </body>
 </html>

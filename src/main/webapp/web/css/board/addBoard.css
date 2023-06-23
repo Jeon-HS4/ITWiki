@@ -1,0 +1,64 @@
+div.container {
+    padding: 0 10px;
+}
+
+p.title {
+    border: 1px solid #000000;
+    padding: 20px 10px;
+    text-align: center;
+    font-weight: bold;
+    background: #f9f9f9;
+}
+
+table.form-table {
+    width: 100%;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+}
+
+table.form-table th,table.form-table td {
+    border: 1px solid #000000;
+}
+
+table.form-table th em.red {
+    margin-left: 3px;
+    color: red;
+}
+
+table.form-table td {
+    padding: 2px 5px 3px 5px;
+}
+
+input.input-normal {
+    padding: 2px 4px;
+    width: 90%;
+}
+
+textarea.textarea-normal {
+    resize: none;
+    width: 97%;
+    height: 400px;
+    margin: 3px 0;
+    padding: 5px;
+}
+
+div.button-area {
+    text-align: right;
+}
+
+div.button-area button, div.button-area a.button {
+    font-size: 13px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    padding: 3px 7px;
+    text-decoration: none;
+    color: #000000;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+div.button-area button:hover, div.button-area a.button:hover {
+    font-weight: bold;
+    background: #e7e7e7;
+}

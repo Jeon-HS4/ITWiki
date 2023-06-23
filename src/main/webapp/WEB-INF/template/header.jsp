@@ -7,12 +7,21 @@
     <div class="menu-wrap">
         <div class="logo">
             <a href="/">
-                <img src="/web/images/test_img.png" style="width: 5rem; height: 50px" alt="Main Logo"></a>
+                <img src="/web/images/ITWikiLogo.png" style="width: 400px; height: 56px" alt="Main Logo"></a>
         </div>
         <c:choose>
             <c:when test="${sessionScope.sUserId ne null}">
-                <a href="/mypage" class="menu"><strong>${sessionScope.sUsername}</strong>님 안녕하세요.</a>
-                <a href="/logout" class="menu">로그아웃</a>
+                <c:choose>
+                    <c:when test="${sessionScope.sRole != 3}">
+                        <a href="/board/list/admin" class="menu" style="color: red">관리자 페이지</a>
+                        <a href="/mypage" class="menu"><strong>${sessionScope.sUsername}</strong>님 안녕하세요.</a>
+                        <a href="/logout" class="menu">로그아웃</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="/mypage" class="menu"><strong>${sessionScope.sUsername}</strong>님 안녕하세요.</a>
+                        <a href="/logout" class="menu">로그아웃</a>
+                    </c:otherwise>
+                </c:choose>
             </c:when>
             <c:otherwise>
                 <div class="login_links">

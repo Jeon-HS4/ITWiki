@@ -78,20 +78,26 @@ div.button-area button:hover, div.button-area a.button:hover {
 <body>
 	<div class="container">
 		<p class="title">Spring boot로 만들어보는 게시판</p>
-		<form action="/board/modify" method="post">
+		<form action="/board/modify/admin" method="post">
 			<input type="hidden" id="pageId" name="pageId" value="${board.pageId}" />
 		
 			<table class="form-table">
 				<tr>
-					<th>제목<em class="red">*</em></th>
+					<th>제목</th>
 					<td>
 						<input type="text" class="input-normal" name="title" maxlength="100" value="${board.title}" placeholder="제목을 입력해주세요.">
 					</td>
 				</tr>
 				<tr>
-					<th>작성자<em class="red">*</em></th>
+					<th>카테고리</th>
 					<td>
-						<input type="text" class="input-normal" name="category" maxlength="50" value="${board.category}" placeholder="작성자를 입력해주세요.">
+						<input type="text" class="input-normal" name="category" readonly maxlength="50" value="${board.category}">
+					</td>
+				</tr>
+				<tr>
+					<th>태그</th>
+					<td>
+						<input type="text" class="input-normal" name="category" readonly maxlength="50" value="${board.tag}">
 					</td>
 				</tr>
 				<tr>
@@ -103,7 +109,7 @@ div.button-area button:hover, div.button-area a.button:hover {
 			</table>
 			<div class="button-area">
 				<button type="submit">게시물 수정</button>
-				<a class="button" href="/board/list">게시판 목록</a>
+				<a class="button" href="/board/list/admin">게시판 목록</a>
 			</div>
 			
 		</form>

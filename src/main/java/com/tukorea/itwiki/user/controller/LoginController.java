@@ -42,6 +42,7 @@ public class LoginController {
             HashMap<String, Object> memberMap = (HashMap<String, Object>) resultMap.get("member");
             session.setAttribute("sUserId", memberMap.get("userId"));
             session.setAttribute("sUsername", memberMap.get("username"));
+            session.setAttribute("sRole", memberMap.get("role"));
             ((HttpSession) session).setAttribute("sEmail", memberMap.get("email"));
         }
         return resultMap;

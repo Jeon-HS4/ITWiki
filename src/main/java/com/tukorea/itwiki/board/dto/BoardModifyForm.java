@@ -2,17 +2,18 @@ package com.tukorea.itwiki.board.dto;
 
 public class BoardModifyForm {
 
-	private int boardSeq; // 게시물 시퀀스
+	private int pageId; // 게시물 아이디
 	private String title; // 제목
-	private String writer; // 작성자
-	private String contents; // 내용
+	private String category; // 카테고리
+	private String tag;		// 태그
+	private String content; // 내용
 
-	public int getBoardSeq() {
-		return boardSeq;
+	public int getPageId() {
+		return pageId;
 	}
 
-	public void setBoardSeq(int boardSeq) {
-		this.boardSeq = boardSeq;
+	public void setPageId(int pageId) {
+		this.pageId = pageId;
 	}
 
 	public String getTitle() {
@@ -23,20 +24,27 @@ public class BoardModifyForm {
 		this.title = title;
 	}
 
-	public String getWriter() {
-		return writer;
+	public String getCategory() {
+		return category;
 	}
 
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getTag() {
+		return tag;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 }

@@ -15,8 +15,22 @@
 		<%-- header 영역 --%>
 		<jsp:include page="../template/header.jsp" />
 
-		<p class="title">Spring boot로 만들어보는 게시판</p>
-		
+		<form action="/board/list" method="post" style="float: right; margin-bottom: 30px">
+			<select name="category" style="width: 100px;">
+				<option value="category">전체보기</option>
+				<c:forEach items="${categoryList}" var="category">
+					<option value="${category}">${category}</option>
+				</c:forEach>
+			</select>
+			<select name="sorting">
+				<option value="viewCount desc">조회순</option>
+				<option value="title">이름순</option>
+				<option value="pageUpdate desc">최종수정일순</option>
+			</select>
+			<input type="text" name="keyword" value="" placeholder="검색어를 입력해주세요.">
+			<button type="submit" class="button">검색</button>
+		</form>
+			<p style="font-size: smaller; padding-top: 20px">총 ${totalCount}건의 게시글이 검색되었습니다.</p>
 		<table class="form-table">
 			<thead>
 				<tr>
@@ -25,17 +39,22 @@
 					<th style="width: 200px">태그</th>
 					<th>제목</th>
 					<th style="width: 80px">조회수</th>
-					<th style="width: 140px">수정일시</th>
+					<th style="width: 160px">수정일시</th>
 				</tr>
 			</thead>
 			<tbody>
+				<c:if test="${empty boardList}">
+					<tr>
+						<td colspan="6">게시물이 없습니다.</td>
+					</tr>
+				</c:if>
 				<c:forEach var="board" items="${boardList}">
 					<tr>
 						<td>${board.boardNo}</td>
 						<td>${board.category}</td>
 						<td>${board.tag}</td>
-						<td style="text-align: left;">
-							<a href="/board/detail?boardSeq=${board.pageId}">${board.title}</a>
+						<td>
+							<a href="/board/detail?pageId=${board.pageId}">${board.title}</a>
 						</td>
 						<td>${board.viewCount}</td>
 						<td>${board.pageUpdate}</td>
@@ -44,7 +63,7 @@
 			</tbody>
 		</table>
 		<div class="button-area">
-			<a class="button" href="/board/form">게시물 등록</a>
+			<a class="button" href="/board/form" id="addBoardButton">게시물 등록</a>
 		</div>
 		<div class="paging">
 			<c:choose>
@@ -77,4 +96,21 @@
 
 	</div>
 </body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function() {
+		var sUserId = '<%= session.getAttribute("sUserId") %>';
+		var addBoardButton = document.getElementById('addBoardButton');
+
+		if (sUserId === null) {
+			addBoardButton.removeAttribute('href');
+			addBoardButton.addEventListener('click', function(event) {
+				event.preventDefault();
+				alert("로그인 후 이용해주세요.");
+			});
+		}
+	});
+</script>
+
 </html>

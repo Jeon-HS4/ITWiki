@@ -17,8 +17,7 @@
 	
 	<%-- 페이지 내용 영역 --%>
 	<div class="contents">
-		<div class="dummy" style="margin-bottom: 10px; padding: 50px 0;"><a href="/board/list">BANNER</a></div>
-		<div class="dummy" style="padding: 200px 0;">CONTENTS</div>
+		<a href="/board/list"><div class="dummy" style="padding: 200px 0;">게시판 보러가기</div></a>
 	</div>
 
 	<%-- footer 영역 --%>

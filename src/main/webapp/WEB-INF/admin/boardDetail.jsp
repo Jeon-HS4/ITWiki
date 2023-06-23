@@ -104,9 +104,9 @@ div.check-wrap div.check-form {
 		</table>
 		<div class="button-area">
 			<a class="button" id="vote" href="/board/vote">즐겨찾기</a>
-			<a class="button" href="/board/modifyForm?pageId=${board.pageId}">수정</a>
-			<a class="button" href="/board/delete?pageId=${board.pageId}">삭제</a>
-			<a class="button" href="/board/list">게시판 목록</a>
+			<a class="button" href="/board/modifyForm/admin?pageId=${board.pageId}">수정</a>
+			<a class="button" href="/board/delete/admin?pageId=${board.pageId}">삭제</a>
+			<a class="button" href="/board/list/admin">게시판 목록</a>
 		</div>
 	</div>
 	
